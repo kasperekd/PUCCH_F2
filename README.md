@@ -2,7 +2,7 @@
 
 ## Overview
 
-This project simulates the performance of a block code using a generator matrix and visualizes the error rates for different values of `k` (number of information bits) and `sigma` (standard deviation of the noise).
+This project simulates the performance of a block code using a generator matrix and visualizes the error rates for different values of `k` (number of information bits) and `sigma` (standard deviation of the noise). While using classes may introduce some overhead and potentially slow down the execution, the decision was made to organize the code in this manner by personal desire
 
 ## Dependencies
 
