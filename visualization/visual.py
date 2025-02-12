@@ -9,7 +9,7 @@ def plot_simulation_results(folder_path):
         print(f"No CSV files found in the directory: {folder_path}")
         return
     
-    line_styles = ['-', '--', '-.', ':']  # Стили линий
+    line_styles = ['-', '--', '-.', ':'] 
     num_line_styles = len(line_styles)
     data_dict = {}
     
@@ -21,8 +21,7 @@ def plot_simulation_results(folder_path):
     
     sorted_k_values = sorted(data_dict.keys())
     
-    # Первый график: Error Rate vs Sigma
-    plt.figure(figsize=(12, 8))  # Создаем первое окно
+    plt.figure(figsize=(12, 8))
     for i, k_value in enumerate(sorted_k_values):
         df = data_dict[k_value]
         line_style = line_styles[i % num_line_styles]
@@ -33,18 +32,16 @@ def plot_simulation_results(folder_path):
     plt.ylabel('Error Rate')
     plt.legend(title='Codeword Size', bbox_to_anchor=(1.05, 1), loc='upper left')
     plt.grid(True)
-    
-    # Сохранение и вывод первого графика
+
     output_file_1 = os.path.join(folder_path, 'error_rate_vs_sigma.png')
     plt.savefig(output_file_1, bbox_inches='tight')
     print(f"First plot saved to {output_file_1}")
     plt.show()
     
-    # Второй график: Time vs k для всех сигм
-    plt.figure(figsize=(12, 8))  # Создаем второе окно
-    for i, sigma in enumerate(data_dict[sorted_k_values[0]]['sigma']):  # Берем сигмы из первого файла
+    plt.figure(figsize=(12, 8))
+    for i, sigma in enumerate(data_dict[sorted_k_values[0]]['sigma']):
         times_for_sigma = [data_dict[k_value].iloc[i]['time'] for k_value in sorted_k_values]
-        line_style = line_styles[i % num_line_styles]  # Используем разные стили линий
+        line_style = line_styles[i % num_line_styles]  
         plt.plot(sorted_k_values, times_for_sigma, linestyle=line_style, label=f'Sigma={sigma:.1f}')
     
     plt.title('Time vs k for All Sigmas')
@@ -53,7 +50,6 @@ def plot_simulation_results(folder_path):
     plt.legend(title='Sigma Values', bbox_to_anchor=(1.05, 1), loc='upper left')
     plt.grid(True)
     
-    # Сохранение и вывод второго графика
     output_file_2 = os.path.join(folder_path, 'time_vs_k.png')
     plt.savefig(output_file_2, bbox_inches='tight')
     print(f"Second plot saved to {output_file_2}")
