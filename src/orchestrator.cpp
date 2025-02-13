@@ -1,6 +1,7 @@
 #include "orchestrator.hpp"
 
 #include <chrono>
+#include <cmath>
 #include <filesystem>
 #include <fstream>
 #include <iostream>
@@ -25,10 +26,8 @@ void Orchestrator::runSimulations(const char* folderName, float startSigma,
         std::cerr << "Error opening file " << filename << std::endl;
         return;
     }
-    out << "sigma,error_rate,time\n";
-
+    out << "snr_db,sigma,error_rate,time\n";
     int totalSteps = static_cast<int>((endSigma - startSigma) / stepSigma) + 1;
-
     for (float sigma = startSigma; sigma <= endSigma; sigma += stepSigma) {
         int errors = 0;
         auto start = std::chrono::high_resolution_clock::now();
@@ -38,10 +37,13 @@ void Orchestrator::runSimulations(const char* folderName, float startSigma,
             }
         }
         auto end = std::chrono::high_resolution_clock::now();
-        std::chrono::duration<double> elapsed = end - start;
+        std::chrono::duration<double> elapsed = (end - start) / numSimulations;
         double errorRate = static_cast<double>(errors) / numSimulations;
 
-        out << sigma << "," << errorRate << "," << elapsed.count() << "\n";
+        double snrDb = 10.0 * log10(1.0 / (sigma * sigma));
+
+        out << snrDb << "," << sigma << "," << errorRate << ","
+            << elapsed.count() << "\n";
     }
 }
 

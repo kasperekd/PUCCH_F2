@@ -110,5 +110,6 @@ This script will:
 - **CSV Files**: Results for each `k` are saved in the `simulation_results` directory.
 - **Plot**: A combined plot of error rates vs. sigma for different values of `k` is saved as `combined_plot.png` in the `simulation_results` directory.
 
+![BER](img/ber.png)  
 ![errRate](img/errRate.png)  
 ![timeK](img/timeK.png)  

@@ -12,17 +12,14 @@ int main(int argc, char* argv[]) {
                   << std::endl;
         return 1;
     }
-
     try {
         float startSigma = std::stof(argv[1]);
         float endSigma = std::stof(argv[2]);
         float stepSigma = std::stof(argv[3]);
         int numSimulations = std::stoi(argv[4]);
-
         if (startSigma >= endSigma || stepSigma <= 0) {
             throw std::invalid_argument("Invalid sigma values or step size.");
         }
-
         Matrix<int> generatorMatrix = {{1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0},
                                        {1, 1, 1, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0},
                                        {1, 0, 0, 1, 0, 0, 1, 0, 1, 1, 1, 1, 1},
@@ -43,18 +40,14 @@ int main(int argc, char* argv[]) {
                                        {1, 0, 0, 1, 1, 1, 0, 0, 1, 0, 0, 1, 1},
                                        {1, 1, 0, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0},
                                        {1, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0}};
-
         std::string folderName = "simulation_results";
         std::filesystem::create_directory(folderName);
-
         int totalKSteps = 13;  // всего шагов
         int currentKStep = 0;
-
         for (int k = 1; k <= 13; ++k) {
             Orchestrator orchestrator(k, numSimulations, generatorMatrix);
             orchestrator.runSimulations(folderName.c_str(), startSigma,
                                         endSigma, stepSigma);
-
             currentKStep++;
             double progress =
                 static_cast<double>(currentKStep) / totalKSteps * 100.0;
@@ -66,6 +59,5 @@ int main(int argc, char* argv[]) {
         std::cerr << "Error: " << e.what() << std::endl;
         return 1;
     }
-
     return 0;
 }
